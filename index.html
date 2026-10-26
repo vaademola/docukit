@@ -3,1199 +3,1514 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meridian Estates — Exceptional Homes, Quietly Handled</title>
-<meta name="description" content="Meridian Estates is a boutique real estate agency representing exceptional homes and considered buyers.">
+<title>DocuKit — PDF tools</title>
 
-<!-- ============================================================
-     OPEN GRAPH / SOCIAL PREVIEW
-     ============================================================ -->
+<!-- ===== Open Graph (Facebook, LinkedIn, Slack, Discord, iMessage) ===== -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Meridian Estates">
-<meta property="og:title" content="Meridian Estates — Exceptional Homes, Quietly Handled">
-<meta property="og:description" content="A boutique real estate agency representing exceptional homes and considered buyers.">
-<meta property="og:url" content="https://yourdomain.com/">
-<meta property="og:image" content="https://yourdomain.com/og-image.png">
-<meta property="og:image:type" content="image/png">
+<meta property="og:title" content="DocuKit — PDF tools that run in your browser">
+<meta property="og:description" content="Merge, split, rotate, reorder and remove PDF pages, or turn images into a PDF. Six tools, no signup, nothing uploaded.">
+<meta property="og:image" content="og-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Meridian Estates — exceptional homes, quietly handled">
+<meta property="og:image:alt" content="DocuKit wordmark with the six PDF tools listed below it">
+<meta property="og:site_name" content="DocuKit">
 
-<!-- Twitter / X -->
+<!-- ===== Twitter / X ===== -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Meridian Estates — Exceptional Homes, Quietly Handled">
-<meta name="twitter:description" content="A boutique real estate agency representing exceptional homes and considered buyers.">
-<meta name="twitter:image" content="https://yourdomain.com/og-image.png">
-<meta name="twitter:image:alt" content="Meridian Estates — exceptional homes, quietly handled">
+<meta name="twitter:title" content="DocuKit — PDF tools that run in your browser">
+<meta name="twitter:description" content="Six PDF tools, no signup, nothing uploaded. Runs entirely in your browser.">
+<meta name="twitter:image" content="og-preview.png">
+<meta name="twitter:image:alt" content="DocuKit wordmark with the six PDF tools listed below it">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-<script>document.documentElement.classList.add('js');</script>
+<!-- ===== Standard ===== -->
+<meta name="description" content="Merge, split, rotate, reorder and remove PDF pages, or turn images into a PDF — entirely in your browser.">
+<meta name="theme-color" content="#f2ede3">
 
 <style>
-/* ============================================================
-   1. TOKENS
-   ============================================================ */
-:root{
-  --ink:#0d0d0d;
-  --paper:#faf8f5;
-  --paper-2:#f2eee8;
-  --gold:#b08d57;
-  --muted:#6f6a63;
-  --line:rgba(13,13,13,.13);
+  :root {
+    --paper: #f2ede3;
+    --card: #fbf8f1;
+    --hover: #ebe4d4;
+    --ink: #1a1712;
+    --ink-2: #625b4f;
+    --ink-3: #8c8477;
+    --rule: #d9d2c2;
+    --rule-strong: #b8ad99;
+    --accent: #a8481a;
+    --ok: #2d5a3d;
+    --bad: #a83232;
 
-  --maxw:1280px;
-  --gutter:clamp(1.25rem, 5vw, 4rem);
-
-  --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --serif:"Cormorant Garamond", Georgia, "Times New Roman", serif;
-
-  --ease:cubic-bezier(.2,.8,.2,1);
-}
-
-/* ============================================================
-   2. BASE
-   ============================================================ */
-*,*::before,*::after{box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-  -webkit-text-size-adjust:100%;
-}
-
-body{
-  margin:0;
-  font-family:var(--sans);
-  font-weight:300;
-  font-size:1rem;
-  line-height:1.7;
-  color:var(--ink);
-  background:var(--paper);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
-}
-
-body.menu-open{overflow:hidden}
-
-img{display:block;max-width:100%;height:auto}
-a{color:inherit}
-button{font-family:inherit}
-
-h1,h2,h3,h4{
-  font-family:var(--serif);
-  font-weight:300;
-  line-height:1.08;
-  letter-spacing:-.01em;
-  margin:0;
-}
-
-h1{font-size:clamp(2.6rem, 7.5vw, 5.25rem)}
-h2{font-size:clamp(2rem, 4.6vw, 3.4rem)}
-h3{font-size:clamp(1.35rem, 2.2vw, 1.6rem); line-height:1.2}
-
-p{margin:0 0 1.1em}
-p:last-child{margin-bottom:0}
-
-section{padding-block:clamp(4rem, 9vw, 7.5rem)}
-[id]{scroll-margin-top:90px}
-
-.wrap{
-  width:100%;
-  max-width:var(--maxw);
-  margin-inline:auto;
-  padding-inline:var(--gutter);
-}
-
-.skip{
-  position:absolute;left:-9999px;top:0;z-index:999;
-  background:var(--ink);color:var(--paper);
-  padding:.9rem 1.4rem;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;
-}
-.skip:focus{left:1rem;top:1rem}
-
-/* ============================================================
-   3. SHARED COMPONENTS
-   ============================================================ */
-.eyebrow{
-  display:flex;align-items:center;gap:.85rem;
-  font-size:.7rem;font-weight:500;
-  letter-spacing:.24em;text-transform:uppercase;
-  color:var(--gold);
-  margin:0 0 1.4rem;
-}
-.eyebrow::before{
-  content:"";width:34px;height:1px;background:currentColor;flex:none;
-}
-
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
-  padding:1rem 1.9rem;
-  font-size:.72rem;font-weight:500;
-  letter-spacing:.2em;text-transform:uppercase;
-  text-decoration:none;cursor:pointer;
-  border:1px solid transparent;border-radius:0;
-  transition:background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
-}
-.btn--solid{background:var(--ink);color:var(--paper)}
-.btn--solid:hover{background:var(--gold);color:#fff}
-.btn--ghost{border-color:currentColor;background:transparent;color:inherit}
-.btn--ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-
-.section-head{
-  display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
-  gap:1.5rem 3rem;
-  margin-bottom:clamp(2.25rem, 4vw, 3.5rem);
-}
-.section-head p{max-width:46ch;color:var(--muted);margin:0}
-
-.link-arrow{
-  display:inline-flex;align-items:center;gap:.6rem;
-  font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
-  text-decoration:none;color:var(--ink);
-  border-bottom:1px solid var(--ink);
-  padding-bottom:.35rem;
-  transition:color .3s var(--ease), border-color .3s var(--ease);
-}
-.link-arrow:hover{color:var(--gold);border-color:var(--gold)}
-.link-arrow::after{content:"→";transition:transform .3s var(--ease)}
-.link-arrow:hover::after{transform:translateX(4px)}
-
-/* Scroll-reveal */
-.js .reveal{
-  opacity:0;transform:translateY(26px);
-  transition:opacity .9s var(--ease), transform .9s var(--ease);
-}
-.js .reveal.in{opacity:1;transform:none}
-
-/* ============================================================
-   4. HEADER + NAV
-   ============================================================ */
-.site-header{
-  position:sticky;top:0;z-index:100;
-  background:var(--paper);
-  border-bottom:1px solid var(--line);
-}
-
-.nav{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:2rem;
-  height:74px;
-}
-
-.logo{
-  font-family:var(--serif);
-  font-size:1.35rem;font-weight:400;
-  letter-spacing:.2em;text-transform:uppercase;
-  text-decoration:none;color:var(--ink);
-  white-space:nowrap;position:relative;z-index:101;
-}
-.logo span{color:var(--gold)}
-
-/* --- Mobile menu panel --- */
-.nav-links{
-  position:fixed;inset:0;z-index:95;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:1.75rem;
-  padding:6rem var(--gutter) 3rem;
-  background:var(--paper);
-  transform:translateY(-100%);
-  transition:transform .6s cubic-bezier(.76,0,.24,1);
-  overflow-y:auto;
-}
-.nav-links.is-open{transform:translateY(0)}
-
-.nav-links a:not(.btn){
-  font-family:var(--serif);
-  font-size:1.9rem;font-weight:300;
-  text-decoration:none;color:var(--ink);
-  transition:color .3s var(--ease);
-}
-.nav-links a:not(.btn):hover{color:var(--gold)}
-
-.nav-cta{width:100%;max-width:300px;margin-top:.5rem}
-
-/* --- Burger --- */
-.burger{
-  position:relative;z-index:101;
-  width:44px;height:44px;padding:0;
-  display:inline-flex;align-items:center;justify-content:center;
-  background:none;border:0;cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-.burger span{
-  display:block;position:relative;
-  width:24px;height:1.5px;background:var(--ink);
-  transition:background .3s var(--ease);
-}
-.burger span::before,
-.burger span::after{
-  content:"";position:absolute;left:0;
-  width:24px;height:1.5px;background:var(--ink);
-  transition:transform .4s var(--ease);
-}
-.burger span::before{top:-7px}
-.burger span::after{top:7px}
-.burger[aria-expanded="true"] span{background:transparent}
-.burger[aria-expanded="true"] span::before{transform:translateY(7px) rotate(45deg)}
-.burger[aria-expanded="true"] span::after{transform:translateY(-7px) rotate(-45deg)}
-
-/* --- Desktop nav --- */
-@media (min-width:900px){
-  .site-header{
-    background:rgba(250,248,245,.85);
-    -webkit-backdrop-filter:blur(18px);
-    backdrop-filter:blur(18px);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  .nav{height:86px}
-  .burger{display:none}
 
-  .nav-links{
-    position:static;inset:auto;
-    flex-direction:row;align-items:center;justify-content:flex-end;
-    gap:2.4rem;
-    padding:0;background:none;
-    transform:none;transition:none;overflow:visible;
+  *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
   }
-  .nav-links a:not(.btn){
-    font-family:var(--sans);
-    font-size:.74rem;font-weight:500;
-    letter-spacing:.18em;text-transform:uppercase;
-    position:relative;padding-block:.4rem;
+
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  .shell {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
   }
-  .nav-links a:not(.btn)::after{
-    content:"";position:absolute;left:0;bottom:0;
-    width:100%;height:1px;background:var(--gold);
-    transform:scaleX(0);transform-origin:right;
-    transition:transform .4s var(--ease);
+
+  /* ---------- Masthead ---------- */
+  .masthead { padding: 56px 0 0; }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin: 0;
   }
-  .nav-links a:not(.btn):hover::after{transform:scaleX(1);transform-origin:left}
-  .nav-cta{width:auto;max-width:none;margin-top:0;padding:.85rem 1.5rem}
-}
 
-/* ============================================================
-   5. HERO
-   ============================================================ */
-.hero{
-  position:relative;
-  min-height:660px;                 /* fallback */
-  min-height:clamp(540px, 84svh, 880px);
-  display:flex;align-items:flex-end;
-  overflow:hidden;
-  color:#fff;
-  background:var(--ink);
-}
-.hero-media{position:absolute;inset:0;z-index:0}
-.hero-media img{
-  width:100%;height:100%;object-fit:cover;
-  animation:heroZoom 16s var(--ease) forwards;
-}
-@keyframes heroZoom{from{transform:scale(1.09)}to{transform:scale(1)}}
-
-.hero::after{
-  content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,
-    rgba(0,0,0,.55) 0%,
-    rgba(0,0,0,.18) 38%,
-    rgba(0,0,0,.72) 100%);
-}
-
-.hero-inner{
-  position:relative;z-index:2;
-  width:100%;
-  padding-block:clamp(3rem, 7vw, 5.5rem);
-}
-.hero .eyebrow{color:rgba(255,255,255,.85)}
-.hero .eyebrow::before{background:var(--gold)}
-.hero h1{max-width:16ch;color:#fff}
-.hero h1 em{font-style:italic;color:var(--gold)}
-.hero-sub{
-  max-width:44ch;
-  margin-top:1.5rem;
-  color:rgba(255,255,255,.82);
-  font-size:clamp(.95rem, 1.6vw, 1.05rem);
-}
-.hero-actions{
-  display:flex;flex-wrap:wrap;gap:.9rem;
-  margin-top:2.25rem;
-}
-.hero .btn--solid{background:var(--paper);color:var(--ink)}
-.hero .btn--solid:hover{background:var(--gold);color:#fff}
-.hero .btn--ghost{color:#fff}
-
-/* ============================================================
-   6. SEARCH BAR
-   ============================================================ */
-.search-wrap{
-  position:relative;z-index:5;
-  margin-top:clamp(-4.5rem, -6vw, -3rem);
-  padding-bottom:clamp(3rem, 6vw, 5rem);
-}
-
-.searchbar{
-  display:grid;
-  gap:1px;
-  background:var(--line);
-  border:1px solid var(--line);
-  box-shadow:0 40px 70px -40px rgba(13,13,13,.45);
-}
-.search-field{
-  background:var(--paper);
-  padding:1rem 1.35rem;
-}
-.search-field label{
-  display:block;
-  font-size:.62rem;font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:.4rem;
-}
-.search-field select,
-.search-field input{
-  width:100%;
-  border:0;background:transparent;
-  font-family:inherit;font-size:.95rem;font-weight:300;
-  color:var(--ink);
-  padding:0;
-  outline:none;
-  border-radius:0;
-  -webkit-appearance:none;appearance:none;
-}
-.search-field select{
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%236f6a63'/></svg>");
-  background-repeat:no-repeat;
-  background-position:right center;
-  padding-right:1.2rem;
-}
-.searchbar button{
-  border:0;cursor:pointer;
-  background:var(--ink);color:var(--paper);
-  padding:1.35rem 2.25rem;
-  font-size:.72rem;font-weight:500;
-  letter-spacing:.2em;text-transform:uppercase;
-  transition:background .35s var(--ease);
-}
-.searchbar button:hover{background:var(--gold)}
-
-@media (min-width:760px){
-  .searchbar{grid-template-columns:repeat(3,1fr) auto}
-}
-
-/* ============================================================
-   7. LISTINGS
-   ============================================================ */
-.listings-grid{
-  display:grid;
-  gap:clamp(1.75rem, 3vw, 2.5rem);
-  grid-template-columns:1fr;
-}
-@media (min-width:620px){ .listings-grid{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:1000px){ .listings-grid{grid-template-columns:repeat(3,1fr)} }
-
-.card{display:flex;flex-direction:column}
-
-.card-media{
-  position:relative;display:block;
-  overflow:hidden;
-  aspect-ratio:4/3;
-  background:var(--paper-2);
-}
-.card-media img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform 1.2s var(--ease);
-}
-.card:hover .card-media img,
-.card:focus-within .card-media img{transform:scale(1.07)}
-
-.card-tag{
-  position:absolute;top:1rem;left:1rem;
-  background:rgba(250,248,245,.94);
-  color:var(--ink);
-  padding:.45rem .85rem;
-  font-size:.58rem;font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;
-  -webkit-backdrop-filter:blur(6px);
-  backdrop-filter:blur(6px);
-}
-
-.card-body{padding-top:1.4rem}
-
-.card-price{
-  font-family:var(--serif);
-  font-size:1.4rem;font-weight:400;
-  color:var(--gold);
-  margin:0 0 .35rem;
-  letter-spacing:.01em;
-}
-
-.card-title{margin:0 0 .55rem}
-.card-title a{
-  text-decoration:none;color:var(--ink);
-  background-image:linear-gradient(var(--gold),var(--gold));
-  background-size:0% 1px;
-  background-repeat:no-repeat;
-  background-position:0 100%;
-  transition:background-size .5s var(--ease);
-  padding-bottom:2px;
-}
-.card:hover .card-title a{background-size:100% 1px}
-
-.card-meta{
-  font-size:.8rem;
-  letter-spacing:.06em;
-  color:var(--muted);
-  margin:0 0 .2rem;
-}
-.card-loc{
-  font-size:.72rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin:0;
-}
-
-.listings-foot{
-  display:flex;justify-content:center;
-  margin-top:clamp(2.5rem, 5vw, 4rem);
-}
-
-/* ============================================================
-   8. ABOUT + STATS
-   ============================================================ */
-.about{background:var(--paper-2)}
-
-.about-grid{
-  display:grid;
-  gap:clamp(2.25rem, 5vw, 4.5rem);
-  align-items:center;
-}
-@media (min-width:900px){
-  .about-grid{grid-template-columns:1fr 1fr}
-}
-
-.about-media{position:relative;overflow:hidden}
-.about-media img{
-  width:100%;aspect-ratio:4/5;object-fit:cover;
-}
-@media (min-width:900px){
-  .about-media img{aspect-ratio:3/4}
-}
-
-.about-copy p{color:var(--muted);max-width:52ch}
-.about-copy h2{margin-bottom:1.5rem;max-width:18ch}
-.about-copy .btn{margin-top:1rem}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:2.5rem 2rem;
-  border-top:1px solid var(--line);
-  margin-top:clamp(3rem, 6vw, 5rem);
-  padding-top:clamp(2.5rem, 4vw, 3.5rem);
-}
-@media (min-width:820px){
-  .stats{grid-template-columns:repeat(4,1fr)}
-}
-
-.stat b{
-  display:block;
-  font-family:var(--serif);
-  font-size:clamp(2.2rem, 4vw, 3.2rem);
-  font-weight:300;
-  line-height:1;
-  letter-spacing:-.02em;
-  margin-bottom:.6rem;
-}
-.stat span{
-  font-size:.68rem;font-weight:500;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* ============================================================
-   9. SERVICES (dark band)
-   ============================================================ */
-.services{
-  background:var(--ink);
-  color:rgba(250,248,245,.72);
-}
-.services h2{color:var(--paper)}
-.services .section-head p{color:rgba(250,248,245,.6)}
-
-.service-grid{
-  display:grid;
-  border-bottom:1px solid rgba(255,255,255,.13);
-}
-@media (min-width:860px){
-  .service-grid{grid-template-columns:1fr 1fr;column-gap:clamp(2rem, 5vw, 4.5rem)}
-}
-
-.service{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  gap:1.1rem;
-  padding-block:1.9rem;
-  border-top:1px solid rgba(255,255,255,.13);
-}
-.service .num{
-  font-family:var(--serif);
-  font-size:1rem;
-  color:var(--gold);
-  line-height:1.6;
-}
-.service h3{color:var(--paper);margin-bottom:.5rem}
-.service p{font-size:.92rem;margin:0;color:rgba(250,248,245,.62)}
-
-/* ============================================================
-   10. TESTIMONIAL
-   ============================================================ */
-.quote{text-align:center;background:var(--paper)}
-.quote .wrap{max-width:960px}
-.quote blockquote{
-  margin:0;
-  font-family:var(--serif);
-  font-weight:300;
-  font-size:clamp(1.5rem, 3.4vw, 2.5rem);
-  line-height:1.35;
-  letter-spacing:-.01em;
-}
-.quote blockquote::before{
-  content:"";
-  display:block;
-  width:52px;height:1px;
-  background:var(--gold);
-  margin:0 auto 2.25rem;
-}
-.quote cite{
-  display:block;
-  margin-top:2.25rem;
-  font-family:var(--sans);
-  font-style:normal;
-  font-size:.68rem;font-weight:500;
-  letter-spacing:.24em;text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* ============================================================
-   11. CONTACT
-   ============================================================ */
-.contact{background:var(--paper-2)}
-
-.contact-grid{
-  display:grid;
-  gap:clamp(2.5rem, 5vw, 5rem);
-}
-@media (min-width:920px){
-  .contact-grid{grid-template-columns:1fr 1.05fr;align-items:start}
-}
-
-.contact-copy h2{margin-bottom:1.4rem;max-width:16ch}
-.contact-copy > p{color:var(--muted);max-width:44ch}
-
-.contact-list{
-  list-style:none;
-  margin:2.5rem 0 0;padding:0;
-  display:grid;gap:1.5rem;
-  border-top:1px solid var(--line);
-  padding-top:2rem;
-}
-.contact-list li{display:grid;gap:.2rem}
-.contact-list dt,
-.contact-list .label{
-  font-size:.62rem;font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted);
-}
-.contact-list a{
-  text-decoration:none;
-  font-size:1.02rem;
-  transition:color .3s var(--ease);
-}
-.contact-list a:hover{color:var(--gold)}
-
-/* Form */
-.contact-form{display:grid;gap:1.6rem}
-@media (min-width:560px){
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
-}
-
-.field{display:block}
-.field label{
-  display:block;
-  font-size:.62rem;font-weight:500;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:.45rem;
-}
-.field input,
-.field select,
-.field textarea{
-  width:100%;
-  font-family:inherit;
-  font-size:1rem;font-weight:300;
-  color:var(--ink);
-  background:transparent;
-  border:0;border-bottom:1px solid var(--line);
-  border-radius:0;
-  padding:.65rem 0;
-  outline:none;
-  transition:border-color .35s var(--ease);
-  -webkit-appearance:none;appearance:none;
-}
-.field select{
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%236f6a63'/></svg>");
-  background-repeat:no-repeat;
-  background-position:right center;
-}
-.field textarea{resize:vertical;min-height:110px}
-.field input:focus,
-.field select:focus,
-.field textarea:focus{border-bottom-color:var(--gold)}
-.field input::placeholder,
-.field textarea::placeholder{color:rgba(111,106,99,.5)}
-
-.contact-form .btn{justify-self:start;margin-top:.5rem}
-
-/* ============================================================
-   12. FOOTER
-   ============================================================ */
-.site-footer{
-  background:var(--ink);
-  color:rgba(250,248,245,.6);
-  padding-block:clamp(3.5rem, 7vw, 5.5rem) 2rem;
-  font-size:.88rem;
-}
-.footer-grid{
-  display:grid;
-  gap:2.75rem;
-}
-@media (min-width:760px){
-  .footer-grid{grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem}
-}
-
-.footer-brand .logo{color:var(--paper);display:inline-block;margin-bottom:1.25rem}
-.footer-brand p{max-width:32ch;color:rgba(250,248,245,.5)}
-
-.footer-col h4{
-  font-family:var(--sans);
-  font-size:.62rem;font-weight:500;
-  letter-spacing:.24em;text-transform:uppercase;
-  color:var(--gold);
-  margin:0 0 1.15rem;
-}
-.footer-col ul{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
-.footer-col a{
-  text-decoration:none;
-  color:rgba(250,248,245,.62);
-  transition:color .3s var(--ease);
-}
-.footer-col a:hover{color:var(--paper)}
-
-.footer-bottom{
-  display:flex;flex-wrap:wrap;gap:1rem;
-  justify-content:space-between;align-items:center;
-  margin-top:clamp(3rem, 6vw, 4.5rem);
-  padding-top:1.75rem;
-  border-top:1px solid rgba(255,255,255,.12);
-  font-size:.74rem;
-  letter-spacing:.06em;
-  color:rgba(250,248,245,.42);
-}
-.footer-bottom a{text-decoration:none}
-.footer-bottom a:hover{color:var(--paper)}
-
-/* ============================================================
-   13. MOTION PREFERENCES
-   ============================================================ */
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.01ms !important;
+  .tagline {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-2);
+    margin: 14px 0 24px;
   }
-  .js .reveal{opacity:1;transform:none}
-  .hero-media img{animation:none}
-}
+
+  .rule {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: 0;
+  }
+
+  /* ---------- Section label ---------- */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-2);
+    margin: 42px 0 12px;
+  }
+
+  /* ---------- Tool list ---------- */
+  .tool-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .tool-list li { border-bottom: 1px solid var(--rule); }
+
+  .tool-row {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 1.5rem;
+    gap: 18px;
+    align-items: baseline;
+    width: 100%;
+    padding: 16px 12px;
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 120ms, color 120ms;
+  }
+  .tool-row:hover { background: var(--hover); }
+  .tool-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .tool-row.active { background: var(--ink); color: var(--paper); }
+
+  .tool-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+  .tool-row.active .tool-num { color: var(--paper); }
+
+  .tool-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .tool-name {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .tool-desc {
+    font-size: 0.84rem;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .tool-row.active .tool-desc { color: rgba(242, 237, 227, 0.68); }
+
+  .tool-arrow {
+    justify-self: end;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--ink-3);
+    transition: transform 150ms, color 150ms;
+  }
+  .tool-row:hover .tool-arrow { transform: translateX(4px); color: var(--accent); }
+  .tool-row.active .tool-arrow { color: var(--paper); transform: translateX(4px); }
+
+  /* ---------- Workspace ---------- */
+  .workspace {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 42px 0 0;
+  }
+
+  .ws-head { margin-bottom: 26px; }
+
+  .ws-head h2 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+  }
+  .ws-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-right: 10px;
+    vertical-align: 2px;
+  }
+  .ws-head p { margin: 0; font-size: 0.88rem; color: var(--ink-2); line-height: 1.5; }
+
+  /* ---------- Dropzone ---------- */
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 40px 20px;
+    border: 1.5px dashed var(--rule-strong);
+    background: transparent;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 120ms, background 120ms;
+  }
+  .dropzone:hover, .dropzone.is-dragover {
+    border-color: var(--ink);
+    background: var(--hover);
+  }
+  .dropzone:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .dropzone.is-busy { opacity: 0.45; pointer-events: none; }
+  .dropzone strong { font-size: 0.95rem; font-weight: 600; }
+  .dropzone span { font-size: 0.8rem; color: var(--ink-2); }
+  .dropzone svg { width: 24px; height: 24px; color: var(--ink-2); margin-bottom: 10px; }
+
+  /* ---------- File list ---------- */
+  .filelist { margin-top: 20px; }
+  .filelist:empty { display: none; }
+
+  .file-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .file-row:first-child { border-top: 1px solid var(--rule); }
+
+  .file-index {
+    flex: none;
+    width: 22px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-3);
+  }
+
+  .file-meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .file-name {
+    font-size: 0.88rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-sub {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+
+  .file-actions { flex: none; display: flex; gap: 4px; }
+
+  /* ---------- Icon buttons ---------- */
+  .icon-btn {
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 100ms, color 100ms, border-color 100ms;
+  }
+  .icon-btn:hover:not(:disabled) {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .icon-btn:disabled { opacity: 0.3; cursor: default; }
+  .icon-btn.danger:hover:not(:disabled) { background: var(--bad); border-color: var(--bad); }
+
+  /* ---------- Controls ---------- */
+  .controls { margin-top: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .controls:empty { display: none; }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+
+  .field-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-2);
+  }
+
+  .field-hint { font-size: 0.8rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
+
+  .field-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .field input[type="text"],
+  .field select {
+    font: inherit;
+    font-size: 0.92rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 12px;
+    background: var(--paper);
+    color: inherit;
+    border: 1px solid var(--rule-strong);
+  }
+  .field input[type="text"]:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--ink);
+    background: #fff;
+  }
+
+  /* ---------- Page grid ---------- */
+  .page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 4px;
+    max-height: 240px;
+    overflow-y: auto;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+  }
+
+  .page-chip {
+    padding: 7px 0;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: all 100ms;
+  }
+  .page-chip:hover { border-color: var(--ink); color: var(--ink); }
+  .page-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .page-chip.is-selected {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* ---------- Order list ---------- */
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 320px;
+    overflow-y: auto;
+    border-top: 1px solid var(--rule);
+  }
+
+  .order-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .order-pos {
+    flex: none;
+    width: 24px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-3);
+  }
+  .order-label { flex: 1; font-size: 0.86rem; }
+
+  /* ---------- Status ---------- */
+  .status {
+    margin-top: 20px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    border-left: 3px solid var(--ink-2);
+    background: var(--paper);
+    color: var(--ink-2);
+  }
+  .status-success { border-color: var(--ok); background: #e9f0ea; color: var(--ok); }
+  .status-error   { border-color: var(--bad); background: #f5e7e2; color: var(--bad); }
+  .status-info    { border-color: var(--ink-2); background: var(--paper); color: var(--ink-2); }
+
+  /* ---------- Buttons ---------- */
+  .actions {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .actions:empty { display: none; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid;
+    cursor: pointer;
+    transition: background 120ms, color 120ms, border-color 120ms;
+  }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .btn-primary:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .btn-success {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-success:hover { background: var(--ink); color: var(--paper); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border-color: var(--rule);
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  .btn-sm {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(242, 237, 227, 0.4);
+    border-top-color: var(--paper);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- CDN error ---------- */
+  .banner-error {
+    margin: 26px 0 0;
+    padding: 14px 18px;
+    border-left: 3px solid var(--bad);
+    background: #f5e7e2;
+    color: var(--bad);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .banner-error code {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 1px 5px;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 640px) {
+    .shell { padding: 0 18px 60px; }
+    .masthead { padding-top: 40px; }
+    .wordmark { font-size: 2rem; }
+    .workspace { padding: 24px 18px; }
+    .dropzone { padding: 32px 16px; }
+    .tool-row { grid-template-columns: 2rem 1fr 1.2rem; gap: 12px; padding: 14px 8px; }
+    .tool-name { font-size: 1.08rem; }
+    .btn { flex: 1 1 auto; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>
 </head>
-
 <body>
-<a class="skip" href="#main">Skip to content</a>
 
-<!-- =========================================================
-     HEADER
-     ========================================================= -->
-<header class="site-header">
-  <div class="wrap nav">
-    <a class="logo" href="#top">Meridian<span>.</span></a>
+<main class="shell">
 
-    <nav id="primary-nav" class="nav-links" aria-label="Primary">
-      <a href="#listings">Listings</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact" class="btn btn--solid nav-cta">Book a viewing</a>
-    </nav>
+  <header class="masthead">
+    <h1 class="wordmark">DocuKit</h1>
+    <p class="tagline">Six PDF tools that run in your browser</p>
+    <hr class="rule">
+  </header>
 
-    <button class="burger" type="button"
-            aria-label="Open menu"
-            aria-expanded="false"
-            aria-controls="primary-nav">
-      <span></span>
-    </button>
-  </div>
-</header>
-
-<main id="main">
-
-  <!-- =======================================================
-       HERO
-       ======================================================= -->
-  <section class="hero" id="top">
-    <div class="hero-media">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80"
-           alt="Contemporary white villa with a reflecting pool at dusk"
-           fetchpriority="high">
-    </div>
-
-    <div class="wrap hero-inner">
-      <p class="eyebrow">Est. 2004 — Boutique Representation</p>
-      <h1>Exceptional homes,<br><em>quietly</em> handled.</h1>
-      <p class="hero-sub">
-        A private-client agency representing architecturally significant
-        residences and the people who care for them.
-      </p>
-      <div class="hero-actions">
-        <a href="#listings" class="btn btn--solid">View the collection</a>
-        <a href="#contact" class="btn btn--ghost">Speak with an advisor</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- =======================================================
-       SEARCH BAR
-       ======================================================= -->
-  <div class="wrap search-wrap">
-    <form class="searchbar" action="#" method="get" role="search">
-      <div class="search-field">
-        <label for="s-location">Location</label>
-        <input id="s-location" name="location" type="text" placeholder="City or neighbourhood">
-      </div>
-
-      <div class="search-field">
-        <label for="s-type">Property type</label>
-        <select id="s-type" name="type">
-          <option>Any type</option>
-          <option>Villa</option>
-          <option>Penthouse</option>
-          <option>Townhouse</option>
-          <option>Estate</option>
-        </select>
-      </div>
-
-      <div class="search-field">
-        <label for="s-price">Price range</label>
-        <select id="s-price" name="price">
-          <option>Any price</option>
-          <option>Up to $2M</option>
-          <option>$2M – $5M</option>
-          <option>$5M – $10M</option>
-          <option>$10M+</option>
-        </select>
-      </div>
-
-      <button type="submit">Search</button>
-    </form>
+  <div id="cdnWarning" class="banner-error" hidden>
+    <strong>The PDF engine could not load.</strong>
+    DocuKit needs <code>pdf-lib</code> from the CDN. Check your connection and reload.
   </div>
 
-  <!-- =======================================================
-       LISTINGS
-       ======================================================= -->
-  <section id="listings" style="padding-top:0">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <p class="eyebrow">The Collection</p>
-          <h2>Currently represented</h2>
-        </div>
-        <p>
-          A deliberately small portfolio. Every property is visited,
-          vetted and photographed by our own team.
-        </p>
-      </div>
-
-      <div class="listings-grid">
-
-        <article class="card reveal">
-          <a class="card-media" href="#" aria-label="View Villa Serena">
-            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80"
-                 alt="Modern villa with pool and palm trees" loading="lazy">
-            <span class="card-tag">For Sale</span>
-          </a>
-          <div class="card-body">
-            <p class="card-price">$4,250,000</p>
-            <h3 class="card-title"><a href="#">Villa Serena</a></h3>
-            <p class="card-meta">4 Beds · 5 Baths · 6,200 sq ft</p>
-            <p class="card-loc">Coral Gables, Florida</p>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="#" aria-label="View The Ridgeline House">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
-                 alt="Modern hillside home with large windows" loading="lazy">
-            <span class="card-tag">For Sale</span>
-          </a>
-          <div class="card-body">
-            <p class="card-price">$7,900,000</p>
-            <h3 class="card-title"><a href="#">The Ridgeline House</a></h3>
-            <p class="card-meta">5 Beds · 6 Baths · 8,450 sq ft</p>
-            <p class="card-loc">Aspen, Colorado</p>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="#" aria-label="View Penthouse 42">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80"
-                 alt="Bright minimal living room with designer furniture" loading="lazy">
-            <span class="card-tag">New</span>
-          </a>
-          <div class="card-body">
-            <p class="card-price">$3,180,000</p>
-            <h3 class="card-title"><a href="#">Penthouse 42</a></h3>
-            <p class="card-meta">3 Beds · 3.5 Baths · 3,100 sq ft</p>
-            <p class="card-loc">Tribeca, New York</p>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="#" aria-label="View Casa del Mar">
-            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80"
-                 alt="Coastal villa exterior with lawn and pool" loading="lazy">
-            <span class="card-tag">For Sale</span>
-          </a>
-          <div class="card-body">
-            <p class="card-price">$5,640,000</p>
-            <h3 class="card-title"><a href="#">Casa del Mar</a></h3>
-            <p class="card-meta">4 Beds · 4 Baths · 5,300 sq ft</p>
-            <p class="card-loc">Marbella, Spain</p>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="#" aria-label="View The Linden Estate">
-            <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=900&q=80"
-                 alt="Traditional stone estate with landscaped garden" loading="lazy">
-            <span class="card-tag">Off Market</span>
-          </a>
-          <div class="card-body">
-            <p class="card-price">Price on request</p>
-            <h3 class="card-title"><a href="#">The Linden Estate</a></h3>
-            <p class="card-meta">7 Beds · 8 Baths · 12,900 sq ft</p>
-            <p class="card-loc">Cotswolds, England</p>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="#" aria-label="View Atelier Loft">
-            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80"
-                 alt="Loft interior with exposed beams and large windows" loading="lazy">
-            <span class="card-tag">For Sale</span>
-          </a>
-          <div class="card-body">
-            <p class="card-price">$2,375,000</p>
-            <h3 class="card-title"><a href="#">Atelier Loft</a></h3>
-            <p class="card-meta">2 Beds · 2 Baths · 2,400 sq ft</p>
-            <p class="card-loc">Le Marais, Paris</p>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="listings-foot reveal">
-        <a href="#" class="link-arrow">View all 48 properties</a>
-      </div>
-    </div>
+  <section aria-label="Choose a tool">
+    <p class="section-label">Choose a tool</p>
+    <ol class="tool-list" id="toolList"></ol>
   </section>
 
-  <!-- =======================================================
-       ABOUT + STATS
-       ======================================================= -->
-  <section class="about" id="about">
-    <div class="wrap">
-      <div class="about-grid">
-        <div class="about-media reveal">
-          <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1100&q=80"
-               alt="Elegant interior with natural light and timber floors" loading="lazy">
-        </div>
-
-        <div class="about-copy reveal">
-          <p class="eyebrow">The Agency</p>
-          <h2>A small firm, by design.</h2>
-          <p>
-            Meridian was founded on a simple conviction: the sale of a
-            significant home deserves the attention of a principal, not a
-            call centre. We take on a limited number of mandates each year
-            so that every client works directly with the people who know
-            their property best.
-          </p>
-          <p>
-            Our approach is discreet, unhurried and entirely personal —
-            from the first valuation to the final signature, and long after.
-          </p>
-          <a href="#contact" class="btn btn--ghost">Meet the team</a>
-        </div>
-      </div>
-
-      <div class="stats reveal">
-        <div class="stat"><b>21</b><span>Years established</span></div>
-        <div class="stat"><b>$1.4B</b><span>Property transacted</span></div>
-        <div class="stat"><b>48</b><span>Active listings</span></div>
-        <div class="stat"><b>96%</b><span>Client referral rate</span></div>
-      </div>
+  <section class="workspace" id="workspace" hidden aria-labelledby="wsTitle">
+    <div class="ws-head">
+      <h2 id="wsTitle"></h2>
+      <p id="wsBlurb"></p>
     </div>
-  </section>
 
-  <!-- =======================================================
-       SERVICES
-       ======================================================= -->
-  <section class="services" id="services">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <p class="eyebrow">What we do</p>
-          <h2>Considered, end to end.</h2>
-        </div>
-        <p>
-          Four disciplines, one point of contact. No hand-offs, no
-          intermediaries.
-        </p>
-      </div>
-
-      <div class="service-grid">
-        <article class="service reveal">
-          <span class="num">01</span>
-          <div>
-            <h3>Private Sales</h3>
-            <p>Discreet marketing of significant homes to a vetted network of buyers, with full control over who sees what, and when.</p>
-          </div>
-        </article>
-
-        <article class="service reveal">
-          <span class="num">02</span>
-          <div>
-            <h3>Buyer Representation</h3>
-            <p>We search on your behalf — including off-market opportunities — negotiate hard, and manage every detail through to completion.</p>
-          </div>
-        </article>
-
-        <article class="service reveal">
-          <span class="num">03</span>
-          <div>
-            <h3>Valuation &amp; Strategy</h3>
-            <p>Evidence-led pricing, honest advice on presentation, and a clear plan for achieving the best result in your timeframe.</p>
-          </div>
-        </article>
-
-        <article class="service reveal">
-          <span class="num">04</span>
-          <div>
-            <h3>Portfolio Management</h3>
-            <p>Long-term stewardship for owners of multiple properties — acquisitions, lettings, maintenance and reporting.</p>
-          </div>
-        </article>
-      </div>
+    <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Add files">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 16V4"/>
+        <path d="M7.5 8.5 12 4l4.5 4.5"/>
+        <path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/>
+      </svg>
+      <strong id="uploadHint">Add files</strong>
+      <span id="uploadSub">Drag and drop, or click to browse</span>
     </div>
-  </section>
+    <input type="file" id="fileInput" hidden>
 
-  <!-- =======================================================
-       TESTIMONIAL
-       ======================================================= -->
-  <section class="quote">
-    <div class="wrap reveal">
-      <blockquote>
-        They sold a house we had lived in for thirty years and made it feel
-        effortless. Not once did we feel like a transaction.
-      </blockquote>
-      <cite>— Private client, Cotswolds</cite>
-    </div>
-  </section>
+    <div class="filelist" id="fileList"></div>
+    <div class="controls" id="controls"></div>
 
-  <!-- =======================================================
-       CONTACT
-       ======================================================= -->
-  <section class="contact" id="contact">
-    <div class="wrap contact-grid">
-      <div class="contact-copy reveal">
-        <p class="eyebrow">Get in touch</p>
-        <h2>Begin a conversation.</h2>
-        <p>
-          Whether you are considering a sale, a purchase, or simply want a
-          candid view of the market, we would be glad to hear from you.
-        </p>
+    <div class="status" id="status" role="status" aria-live="polite" hidden></div>
 
-        <ul class="contact-list">
-          <li>
-            <span class="label">Telephone</span>
-            <a href="tel:+15551234567">+1 (555) 123 4567</a>
-          </li>
-          <li>
-            <span class="label">Email</span>
-            <a href="mailto:hello@meridianestates.com">hello@meridianestates.com</a>
-          </li>
-          <li>
-            <span class="label">Studio</span>
-            <span>118 Bay Street, Suite 400<br>Miami, FL 33131</span>
-          </li>
-        </ul>
-      </div>
-
-      <form class="contact-form reveal" action="#" method="post">
-        <div class="form-row">
-          <div class="field">
-            <label for="c-name">Full name</label>
-            <input id="c-name" name="name" type="text" placeholder="Jane Doe" required>
-          </div>
-          <div class="field">
-            <label for="c-email">Email</label>
-            <input id="c-email" name="email" type="email" placeholder="jane@example.com" required>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="c-interest">I'm interested in</label>
-          <select id="c-interest" name="interest">
-            <option>Buying a property</option>
-            <option>Selling a property</option>
-            <option>Valuation advice</option>
-            <option>Portfolio management</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="c-message">Message</label>
-          <textarea id="c-message" name="message" placeholder="Tell us a little about what you have in mind…"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn--solid">Send enquiry</button>
-      </form>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="runBtn" hidden>Run</button>
+      <a class="btn btn-success" id="downloadBtn" hidden download>Download PDF</a>
+      <button type="button" class="btn btn-ghost btn-sm" id="resetBtn" hidden>Start over</button>
     </div>
   </section>
 
 </main>
 
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="logo" href="#top">Meridian<span>.</span></a>
-        <p>Boutique representation of exceptional homes across the United States and Europe.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="#listings">Listings</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Offices</h4>
-        <ul>
-          <li><a href="#">Miami</a></li>
-          <li><a href="#">New York</a></li>
-          <li><a href="#">London</a></li>
-          <li><a href="#">Paris</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Pinterest</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2026 Meridian Estates. All rights reserved.</span>
-      <span><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></span>
-    </div>
-  </div>
-</footer>
-
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
-/* ---------- Mobile menu ---------- */
 (function () {
-  var burger = document.querySelector('.burger');
-  var nav    = document.getElementById('primary-nav');
-  if (!burger || !nav) return;
+  'use strict';
 
-  function close() {
-    nav.classList.remove('is-open');
-    burger.setAttribute('aria-expanded', 'false');
-    burger.setAttribute('aria-label', 'Open menu');
-    document.body.classList.remove('menu-open');
+  var PDFLIB_OK = typeof window.PDFLib !== 'undefined';
+  var MAX_FILE_BYTES = 100 * 1024 * 1024;
+  var MAX_IMAGE_PIXELS = 100 * 1000 * 1000;
+  var PT_PER_PX = 72 / 96; // 96 DPI
+
+  var TOOL_ORDER = ['merge', 'split', 'rotate', 'reorder', 'remove', 'image'];
+
+  var TOOLS = {
+    merge: {
+      title: 'Merge PDF',
+      short: 'Combine files into one',
+      long: 'Combine several PDFs into a single document, in the order you choose.',
+      accept: '.pdf,application/pdf',
+      multiple: true,
+      uploadHint: 'Add two or more PDF files',
+      action: 'Merge PDFs'
+    },
+    split: {
+      title: 'Split PDF',
+      short: 'Extract a page range',
+      long: 'Pull a page range out of a PDF and save it as a new document.',
+      accept: '.pdf,application/pdf',
+      multiple: false,
+      uploadHint: 'Add one PDF file',
+      action: 'Extract pages'
+    },
+    rotate: {
+      title: 'Rotate PDF',
+      short: 'Turn pages 90°, 180°, 270°',
+      long: 'Turn every page, or only the ones you pick, by 90°, 180° or 270°.',
+      accept: '.pdf,application/pdf',
+      multiple: false,
+      uploadHint: 'Add one PDF file',
+      action: 'Rotate pages'
+    },
+    reorder: {
+      title: 'Reorder Pages',
+      short: 'Change page sequence',
+      long: 'Change the sequence of pages and save the new arrangement.',
+      accept: '.pdf,application/pdf',
+      multiple: false,
+      uploadHint: 'Add one PDF file',
+      action: 'Apply order'
+    },
+    remove: {
+      title: 'Remove Pages',
+      short: 'Delete selected pages',
+      long: 'Delete the pages you select and keep the rest in their original order.',
+      accept: '.pdf,application/pdf',
+      multiple: false,
+      uploadHint: 'Add one PDF file',
+      action: 'Remove pages'
+    },
+    image: {
+      title: 'Image to PDF',
+      short: 'JPG, PNG, WebP → PDF',
+      long: 'Turn images into a PDF where each page is the image itself — no margins, no padding.',
+      accept: '.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp',
+      multiple: true,
+      uploadHint: 'Add one or more images',
+      action: 'Create PDF'
+    }
+  };
+
+  /* ---------- helpers ---------- */
+  function $(s, r) { return (r || document).querySelector(s); }
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+
+  function el(tag, props) {
+    var node = document.createElement(tag);
+    props = props || {};
+    Object.keys(props).forEach(function (k) {
+      var v = props[k];
+      if (k === 'class') node.className = v;
+      else if (k === 'text') node.textContent = v;
+      else if (v === true) node.setAttribute(k, '');
+      else if (v !== false && v != null) node.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) appendChild(node, arguments[i]);
+    return node;
   }
 
-  burger.addEventListener('click', function () {
-    var isOpen = burger.getAttribute('aria-expanded') === 'true';
-    if (isOpen) {
-      close();
-    } else {
-      nav.classList.add('is-open');
-      burger.setAttribute('aria-expanded', 'true');
-      burger.setAttribute('aria-label', 'Close menu');
-      document.body.classList.add('menu-open');
+  function appendChild(node, child) {
+    if (child == null || child === false) return;
+    if (Array.isArray(child)) { child.forEach(function (c) { appendChild(node, c); }); return; }
+    node.appendChild(child.nodeType ? child : document.createTextNode(String(child)));
+  }
+
+  function formatBytes(n) {
+    if (n == null) return '';
+    if (n < 1024) return n + ' B';
+    var u = ['KB', 'MB', 'GB'], v = n / 1024, i = 0;
+    while (v >= 1024 && i < u.length - 1) { v /= 1024; i++; }
+    return (v >= 10 ? v.toFixed(0) : v.toFixed(1)) + ' ' + u[i];
+  }
+
+  function isPdfFile(f) {
+    return f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+  }
+  function isImageFile(f) {
+    return /^image\/(jpeg|png|webp)$/i.test(f.type) || /\.(jpe?g|png|webp)$/i.test(f.name);
+  }
+
+  function sniffImageMime(bytes, name) {
+    var b = new Uint8Array(bytes);
+    if (b.length > 3 && b[0] === 0xFF && b[1] === 0xD8 && b[2] === 0xFF) return 'image/jpeg';
+    if (b.length > 8 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4E && b[3] === 0x47) return 'image/png';
+    if (b.length > 12 && b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 &&
+        b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return 'image/webp';
+    if (/\.png$/i.test(name)) return 'image/png';
+    if (/\.jpe?g$/i.test(name)) return 'image/jpeg';
+    if (/\.webp$/i.test(name)) return 'image/webp';
+    return null;
+  }
+
+  /* ---------- page-range parser ---------- */
+  function parsePageRange(raw, count) {
+    var text = String(raw == null ? '' : raw).trim();
+    if (!text) throw new Error('Enter at least one page or range — for example 1-3, 5.');
+    if (!count) throw new Error('This document has no readable pages.');
+
+    var seen = new Set(), out = [];
+    var parts = text.split(',');
+
+    for (var i = 0; i < parts.length; i++) {
+      var part = parts[i].trim();
+      if (!part) throw new Error('There is an empty entry in "' + text + '". Separate pages with commas, like 1-3, 5.');
+
+      var m = part.match(/^(\d+)\s*(?:-\s*(\d*))?$/);
+      if (!m) throw new Error('"' + part + '" is not a valid page or range. Use formats like 3, 1-5 or 4-.');
+
+      var start = Number(m[1]);
+      var hasDash = part.indexOf('-') !== -1;
+      var end = hasDash ? (m[2] === '' || m[2] == null ? count : Number(m[2])) : start;
+
+      if (start < 1) throw new Error('Page numbers start at 1, but "' + part + '" asks for page ' + start + '.');
+      if (start > count) throw new Error('Page ' + start + ' does not exist — this document has ' + count + ' page' + (count === 1 ? '' : 's') + '.');
+      if (end > count) throw new Error('Page ' + end + ' does not exist — this document has ' + count + ' page' + (count === 1 ? '' : 's') + '.');
+      if (end < start) throw new Error('The range "' + part + '" runs backwards. Write it as ' + end + '-' + start + '.');
+
+      for (var p = start; p <= end; p++) {
+        if (!seen.has(p)) { seen.add(p); out.push(p - 1); }
+      }
     }
-  });
+    return out;
+  }
 
-  // Close when a link is tapped
-  nav.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', close);
-  });
+  /* ---------- state ---------- */
+  var uid = 0;
+  var state = {
+    toolId: null,
+    files: [],
+    pageCount: 0,
+    order: [],
+    selected: new Set(),
+    controls: { splitRange: '', rotateAngle: '90' },
+    resultUrl: null,
+    resultName: '',
+    busy: false
+  };
 
-  // Close on Escape
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') close();
-  });
+  /* ---------- rendering: tool list ---------- */
+  function renderToolList() {
+    var list = $('#toolList');
+    list.innerHTML = '';
 
-  // Reset when resizing to desktop
-  window.addEventListener('resize', function () {
-    if (window.innerWidth >= 900) close();
-  });
-})();
+    TOOL_ORDER.forEach(function (id, i) {
+      var tool = TOOLS[id];
+      var active = state.toolId === id;
 
-/* ---------- Scroll reveal ---------- */
-(function () {
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var items  = document.querySelectorAll('.reveal');
+      var row = el('button', {
+        type: 'button',
+        class: 'tool-row' + (active ? ' active' : ''),
+        'aria-pressed': active ? 'true' : 'false'
+      },
+        el('span', { class: 'tool-num', text: two(i + 1) }),
+        el('span', { class: 'tool-main' },
+          el('span', { class: 'tool-name', text: tool.title }),
+          el('span', { class: 'tool-desc', text: tool.short })
+        ),
+        el('span', { class: 'tool-arrow', text: '\u2192' })
+      );
 
-  if (reduce || !('IntersectionObserver' in window)) {
-    items.forEach(function (el) { el.classList.add('in'); });
+      row.addEventListener('click', function () { selectTool(id); });
+
+      var li = el('li');
+      li.appendChild(row);
+      list.appendChild(li);
+    });
+  }
+
+  function selectTool(id) {
+    if (state.toolId === id) {
+      $('#workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    state.toolId = id;
+    state.files = [];
+    state.pageCount = 0;
+    state.order = [];
+    state.selected = new Set();
+    state.controls = { splitRange: '', rotateAngle: '90' };
+
+    clearResult();
+    clearStatus();
+    render();
+    $('#workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(function () { $('#dropzone').focus({ preventScroll: true }); }, 320);
+  }
+
+  /* ---------- rendering: workspace ---------- */
+  function render() {
+    renderToolList();
+    renderWorkspace();
+  }
+
+  function renderWorkspace() {
+    var ws = $('#workspace');
+    if (!state.toolId) { ws.hidden = true; return; }
+
+    var tool = TOOLS[state.toolId];
+    var idx = TOOL_ORDER.indexOf(state.toolId);
+
+    ws.hidden = false;
+
+    var title = $('#wsTitle');
+    title.innerHTML = '';
+    title.appendChild(el('span', { class: 'ws-num', text: two(idx + 1) }));
+    title.appendChild(document.createTextNode(tool.title));
+
+    $('#wsBlurb').textContent = tool.long;
+    $('#uploadHint').textContent = tool.uploadHint;
+    $('#uploadSub').textContent = tool.multiple
+      ? 'Drag and drop files here, or click to browse'
+      : 'Drag and drop a file here, or click to browse';
+
+    var input = $('#fileInput');
+    input.accept = tool.accept;
+    input.multiple = !!tool.multiple;
+
+    $('#dropzone').setAttribute('aria-label', tool.uploadHint);
+
+    renderFileList();
+    renderControls();
+    updateActions();
+  }
+
+  /* ---------- rendering: file list ---------- */
+  function renderFileList() {
+    var list = $('#fileList');
+    list.innerHTML = '';
+
+    if (!state.files.length) return;
+
+    var tool = TOOLS[state.toolId];
+
+    state.files.forEach(function (file, index) {
+      var sub = [formatBytes(file.size)];
+      if (state.toolId !== 'image' && state.files.length === 1 && state.pageCount) {
+        sub.push(state.pageCount + ' page' + (state.pageCount === 1 ? '' : 's'));
+      }
+
+      var actions = [];
+
+      if (tool.multiple) {
+        var up = el('button', { type: 'button', class: 'icon-btn', text: '\u2191', 'aria-label': 'Move ' + file.name + ' up' });
+        up.disabled = index === 0;
+        up.addEventListener('click', function () { moveFile(index, -1); });
+
+        var down = el('button', { type: 'button', class: 'icon-btn', text: '\u2193', 'aria-label': 'Move ' + file.name + ' down' });
+        down.disabled = index === state.files.length - 1;
+        down.addEventListener('click', function () { moveFile(index, 1); });
+
+        actions.push(up, down);
+      }
+
+      var del = el('button', { type: 'button', class: 'icon-btn danger', text: '\u2715', 'aria-label': 'Remove ' + file.name });
+      del.addEventListener('click', function () { removeFile(index); });
+      actions.push(del);
+
+      list.appendChild(el('div', { class: 'file-row' },
+        el('span', { class: 'file-index', text: two(index + 1) }),
+        el('span', { class: 'file-meta' },
+          el('span', { class: 'file-name', text: file.name, title: file.name }),
+          el('span', { class: 'file-sub', text: sub.join(' \u00b7 ') })
+        ),
+        el('span', { class: 'file-actions' }, actions)
+      ));
+    });
+  }
+
+  function moveFile(index, delta) {
+    var target = index + delta;
+    if (target < 0 || target >= state.files.length) return;
+    var moved = state.files.splice(index, 1)[0];
+    state.files.splice(target, 0, moved);
+    clearResult();
+    renderFileList();
+    updateActions();
+  }
+
+  function removeFile(index) {
+    state.files.splice(index, 1);
+    syncPageState();
+    clearResult();
+    clearStatus();
+    renderWorkspace();
+  }
+
+  /* ---------- rendering: controls ---------- */
+  function renderControls() {
+    var host = $('#controls');
+    host.innerHTML = '';
+    if (!state.files.length) return;
+
+    if (state.toolId === 'split' && state.pageCount) host.appendChild(buildSplitControls());
+    else if (state.toolId === 'rotate' && state.pageCount) host.appendChild(buildRotateControls());
+    else if (state.toolId === 'reorder' && state.pageCount) host.appendChild(buildReorderControls());
+    else if (state.toolId === 'remove' && state.pageCount) host.appendChild(buildRemoveControls());
+    else if (state.toolId === 'merge' && state.files.length >= 2) {
+      host.appendChild(el('p', { class: 'field-hint', text:
+        'Files merge from top to bottom. Use the arrows above to change the order.'
+      }));
+    } else if (state.toolId === 'image') {
+      host.appendChild(el('p', { class: 'field-hint', text:
+        'Each image becomes one page at its own size — no borders, no white padding.'
+      }));
+    }
+  }
+
+  function buildSplitControls() {
+    var input = el('input', {
+      type: 'text', id: 'splitRange', placeholder: 'e.g. 1-3, 5, 8',
+      autocomplete: 'off', spellcheck: 'false', 'aria-describedby': 'splitHint'
+    });
+    input.value = state.controls.splitRange;
+    input.addEventListener('input', function () { state.controls.splitRange = input.value; });
+
+    return el('label', { class: 'field' },
+      el('span', { class: 'field-label', text: 'Pages to extract' }),
+      input,
+      el('span', { class: 'field-hint', id: 'splitHint', text:
+        state.pageCount + ' page' + (state.pageCount === 1 ? '' : 's') + ' available. Comma for separate pages, dash for ranges.'
+      })
+    );
+  }
+
+  function buildRotateControls() {
+    var frag = document.createDocumentFragment();
+
+    var select = el('select', { id: 'rotateAngle' },
+      el('option', { value: '90', text: '90° clockwise' }),
+      el('option', { value: '180', text: '180°' }),
+      el('option', { value: '270', text: '270° clockwise (90° anticlockwise)' })
+    );
+    select.value = state.controls.rotateAngle;
+    select.addEventListener('change', function () { state.controls.rotateAngle = select.value; });
+
+    frag.appendChild(el('label', { class: 'field' },
+      el('span', { class: 'field-label', text: 'Rotation' }), select
+    ));
+    frag.appendChild(buildPageSelector('Pages to rotate'));
+    return frag;
+  }
+
+  function buildRemoveControls() { return buildPageSelector('Pages to remove'); }
+
+  function buildPageSelector(labelText) {
+    var wrap = el('div', { class: 'field' });
+    var summary = el('span', { class: 'field-hint' });
+
+    function updateSummary() {
+      summary.textContent = state.selected.size + ' of ' + state.pageCount +
+        ' page' + (state.pageCount === 1 ? '' : 's') + ' selected.';
+    }
+
+    var grid = el('div', { class: 'page-grid' });
+    var chips = [];
+
+    for (var i = 0; i < state.pageCount; i++) {
+      (function (index) {
+        var chip = el('button', {
+          type: 'button',
+          class: 'page-chip' + (state.selected.has(index) ? ' is-selected' : ''),
+          'aria-pressed': state.selected.has(index) ? 'true' : 'false',
+          'aria-label': 'Page ' + (index + 1),
+          text: String(index + 1)
+        });
+        chip.addEventListener('click', function () {
+          if (state.selected.has(index)) state.selected.delete(index);
+          else state.selected.add(index);
+          var on = state.selected.has(index);
+          chip.classList.toggle('is-selected', on);
+          chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+          updateSummary();
+        });
+        chips.push(chip);
+        grid.appendChild(chip);
+      })(i);
+    }
+
+    var all = el('button', { type: 'button', class: 'btn btn-ghost btn-sm', text: 'Select all' });
+    all.addEventListener('click', function () {
+      state.selected = new Set();
+      for (var j = 0; j < state.pageCount; j++) state.selected.add(j);
+      chips.forEach(function (c) { c.classList.add('is-selected'); c.setAttribute('aria-pressed', 'true'); });
+      updateSummary();
+    });
+
+    var none = el('button', { type: 'button', class: 'btn btn-ghost btn-sm', text: 'Clear' });
+    none.addEventListener('click', function () {
+      state.selected.clear();
+      chips.forEach(function (c) { c.classList.remove('is-selected'); c.setAttribute('aria-pressed', 'false'); });
+      updateSummary();
+    });
+
+    updateSummary();
+
+    wrap.appendChild(el('span', { class: 'field-label', text: labelText }));
+    wrap.appendChild(el('div', { class: 'field-row' }, all, none));
+    wrap.appendChild(grid);
+    wrap.appendChild(summary);
+    return wrap;
+  }
+
+  function buildReorderControls() {
+    var wrap = el('div', { class: 'field' });
+    var list = el('div', { class: 'order-list' });
+
+    function move(pos, delta) {
+      var t = pos + delta;
+      if (t < 0 || t >= state.order.length) return;
+      var item = state.order.splice(pos, 1)[0];
+      state.order.splice(t, 0, item);
+      rebuild();
+    }
+
+    function rebuild() {
+      list.innerHTML = '';
+      state.order.forEach(function (orig, pos) {
+        var up = el('button', { type: 'button', class: 'icon-btn', text: '\u2191', 'aria-label': 'Move page ' + (orig + 1) + ' up' });
+        up.disabled = pos === 0;
+        up.addEventListener('click', function () { move(pos, -1); });
+
+        var down = el('button', { type: 'button', class: 'icon-btn', text: '\u2193', 'aria-label': 'Move page ' + (orig + 1) + ' down' });
+        down.disabled = pos === state.order.length - 1;
+        down.addEventListener('click', function () { move(pos, 1); });
+
+        list.appendChild(el('div', { class: 'order-row' },
+          el('span', { class: 'order-pos', text: two(pos + 1) }),
+          el('span', { class: 'order-label', text: 'Page ' + (orig + 1) }),
+          up, down
+        ));
+      });
+    }
+
+    rebuild();
+
+    var reset = el('button', { type: 'button', class: 'btn btn-ghost btn-sm', text: 'Reset order' });
+    reset.addEventListener('click', function () {
+      state.order = Array.from({ length: state.pageCount }, function (_, i) { return i; });
+      rebuild();
+    });
+
+    wrap.appendChild(el('span', { class: 'field-label', text: 'New page order' }));
+    wrap.appendChild(el('span', { class: 'field-hint', text:
+      'Arrows move pages. The list reads top to bottom in the order they will appear.'
+    }));
+    wrap.appendChild(list);
+    wrap.appendChild(el('div', { class: 'field-row' }, reset));
+    return wrap;
+  }
+
+  /* ---------- actions bar ---------- */
+  function canRun() {
+    if (!state.files.length) return false;
+    if (state.toolId === 'merge') return state.files.length >= 2;
+    return true;
+  }
+
+  function updateActions() {
+    var run = $('#runBtn');
+    var dl = $('#downloadBtn');
+    var rs = $('#resetBtn');
+
+    if (!state.toolId) { run.hidden = dl.hidden = rs.hidden = true; return; }
+
+    run.hidden = false;
+    run.disabled = state.busy || !canRun();
+    run.innerHTML = '';
+    if (state.busy) {
+      run.appendChild(el('span', { class: 'spinner' }));
+      run.appendChild(document.createTextNode('Working\u2026'));
+    } else {
+      run.textContent = TOOLS[state.toolId].action;
+    }
+
+    dl.hidden = !state.resultUrl;
+    if (state.resultUrl) {
+      dl.href = state.resultUrl;
+      dl.download = state.resultName;
+    }
+
+    rs.hidden = !(state.files.length || state.resultUrl);
+  }
+
+  function setBusy(v) {
+    state.busy = v;
+    $('#dropzone').classList.toggle('is-busy', v);
+    updateActions();
+  }
+
+  /* ---------- status & result ---------- */
+  function setStatus(kind, msg) {
+    var n = $('#status');
+    n.hidden = false;
+    n.className = 'status status-' + kind;
+    n.textContent = msg;
+  }
+  function clearStatus() {
+    var n = $('#status');
+    n.hidden = true;
+    n.textContent = '';
+    n.className = 'status';
+  }
+  function clearResult() {
+    if (state.resultUrl) { URL.revokeObjectURL(state.resultUrl); state.resultUrl = null; }
+    state.resultName = '';
+    var dl = $('#downloadBtn');
+    dl.hidden = true;
+    dl.removeAttribute('href');
+    dl.removeAttribute('download');
+  }
+  function showResult(bytes, name) {
+    clearResult();
+    state.resultUrl = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+    state.resultName = name;
+    setStatus('success', 'Done — "' + name + '" is ready (' + formatBytes(bytes.byteLength) + ').');
+    updateActions();
+  }
+
+  /* ---------- adding files ---------- */
+  function syncPageState() {
+    var first = state.files[0];
+    state.pageCount = first && first.pageCount ? first.pageCount : 0;
+    state.order = [];
+    for (var i = 0; i < state.pageCount; i++) state.order.push(i);
+    state.selected = new Set();
+    if (state.toolId === 'rotate') state.order.forEach(function (i) { state.selected.add(i); });
+  }
+
+  function addFiles(fileList) {
+    if (!state.toolId || state.busy || !PDFLIB_OK) return;
+    var incoming = Array.prototype.slice.call(fileList || []);
+    if (!incoming.length) return;
+
+    var tool = TOOLS[state.toolId];
+    var isImage = state.toolId === 'image';
+
+    clearStatus();
+    setBusy(true);
+
+    var problems = [];
+    var added = 0;
+    var accepted = [], wrong = [];
+
+    incoming.forEach(function (f) {
+      var ok = isImage ? isImageFile(f) : isPdfFile(f);
+      if (ok) accepted.push(f);
+      else wrong.push(f.name);
+    });
+
+    if (wrong.length) {
+      problems.push('Skipped ' + wrong.length + ' file' + (wrong.length > 1 ? 's' : '') +
+        ' that ' + (wrong.length > 1 ? 'are' : 'is') + ' not ' +
+        (isImage ? 'a JPG, PNG or WebP image' : 'a PDF') + ': ' + wrong.join(', ') + '.');
+    }
+
+    var queue = accepted;
+    if (!tool.multiple && queue.length > 1) {
+      problems.push('This tool works on one file at a time — only "' + queue[0].name + '" was added.');
+      queue = queue.slice(0, 1);
+    }
+
+    if (!tool.multiple) { state.files = []; syncPageState(); }
+
+    var chain = Promise.resolve();
+
+    queue.forEach(function (f) {
+      chain = chain.then(function () {
+        if (f.size > MAX_FILE_BYTES) {
+          problems.push('"' + f.name + '" is ' + formatBytes(f.size) + ' — above the ' + formatBytes(MAX_FILE_BYTES) + ' limit.');
+          return;
+        }
+        return f.arrayBuffer().then(function (bytes) {
+          if (!isImage && !tool.multiple) {
+            return PDFLib.PDFDocument.load(bytes, { updateMetadata: false })
+              .then(function (doc) {
+                var n = doc.getPageCount();
+                if (!n) throw new Error('empty');
+                return n;
+              })
+              .then(function (n) {
+                state.files.push({ name: f.name, size: f.size, bytes: bytes, pageCount: n });
+                added++;
+              })
+              .catch(function () {
+                problems.push('"' + f.name + '" could not be opened. It may be corrupted or password-protected.');
+              });
+          }
+          state.files.push({ name: f.name, size: f.size, bytes: bytes, pageCount: 0 });
+          added++;
+        }).catch(function () {
+          problems.push('"' + f.name + '" could not be read from disk.');
+        });
+      });
+    });
+
+    chain.then(function () {
+      syncPageState();
+      if (added) clearResult();
+      if (problems.length && !added) setStatus('error', problems.join(' '));
+      else if (problems.length) setStatus('info', problems.join(' '));
+      else clearStatus();
+    }).catch(function (err) {
+      setStatus('error', 'Something went wrong while reading those files. ' + (err && err.message ? err.message : ''));
+    }).then(function () {
+      setBusy(false);
+      renderWorkspace();
+    });
+  }
+
+  /* ---------- PDF helpers ---------- */
+  function baseName() {
+    var first = state.files[0];
+    var n = first ? first.name.replace(/\.[^.]+$/, '') : 'document';
+    n = n.replace(/[\\/:*?"<>|]+/g, '-').trim();
+    return n || 'document';
+  }
+
+  function loadPdf(bytes, label) {
+    return PDFLib.PDFDocument.load(bytes, { updateMetadata: false }).catch(function () {
+      throw new Error('"' + label + '" could not be read. It may be corrupted or password-protected.');
+    });
+  }
+
+  function extractPages(srcBytes, indices, label) {
+    return loadPdf(srcBytes, label).then(function (src) {
+      return PDFLib.PDFDocument.create().then(function (out) {
+        return out.copyPages(src, indices).then(function (pages) {
+          pages.forEach(function (p) { out.addPage(p); });
+          return out.save();
+        });
+      });
+    });
+  }
+
+  /* ---------- operations ---------- */
+  function runMerge() {
+    if (state.files.length < 2) return Promise.reject(new Error('Add at least two PDFs to merge.'));
+    var out;
+    return PDFLib.PDFDocument.create().then(function (doc) {
+      out = doc;
+      var chain = Promise.resolve();
+      state.files.forEach(function (f) {
+        chain = chain.then(function () {
+          return loadPdf(f.bytes, f.name).then(function (src) {
+            return out.copyPages(src, src.getPageIndices()).then(function (pages) {
+              pages.forEach(function (p) { out.addPage(p); });
+            });
+          });
+        });
+      });
+      return chain;
+    }).then(function () { return out.save(); })
+      .then(function (bytes) { return { bytes: bytes, name: baseName() + '-merged.pdf' }; });
+  }
+
+  function runSplit() {
+    var input = $('#splitRange');
+    var raw = input ? input.value : state.controls.splitRange;
+    var indices = parsePageRange(raw, state.pageCount);
+    if (!indices.length) return Promise.reject(new Error('No pages matched that range.'));
+    return extractPages(state.files[0].bytes, indices, state.files[0].name)
+      .then(function (bytes) { return { bytes: bytes, name: baseName() + '-pages.pdf' }; });
+  }
+
+  function runRotate() {
+    if (!state.selected.size) return Promise.reject(new Error('Select at least one page to rotate.'));
+    var delta = Number(state.controls.rotateAngle) || 90;
+    var indices = Array.from(state.selected).sort(function (a, b) { return a - b; });
+    var file = state.files[0];
+    return loadPdf(file.bytes, file.name).then(function (doc) {
+      indices.forEach(function (i) {
+        var page = doc.getPage(i);
+        var current = page.getRotation().angle || 0;
+        var next = (((current + delta) % 360) + 360) % 360;
+        page.setRotation(PDFLib.degrees(next));
+      });
+      return doc.save();
+    }).then(function (bytes) { return { bytes: bytes, name: baseName() + '-rotated.pdf' }; });
+  }
+
+  function runReorder() {
+    if (state.order.length !== state.pageCount) {
+      return Promise.reject(new Error('The page order is incomplete — reset and try again.'));
+    }
+    return extractPages(state.files[0].bytes, state.order, state.files[0].name)
+      .then(function (bytes) { return { bytes: bytes, name: baseName() + '-reordered.pdf' }; });
+  }
+
+  function runRemove() {
+    if (!state.selected.size) return Promise.reject(new Error('Select at least one page to remove.'));
+    var keep = [];
+    for (var i = 0; i < state.pageCount; i++) if (!state.selected.has(i)) keep.push(i);
+    if (!keep.length) return Promise.reject(new Error('You cannot remove every page. Leave at least one.'));
+    return extractPages(state.files[0].bytes, keep, state.files[0].name)
+      .then(function (bytes) { return { bytes: bytes, name: baseName() + '-edited.pdf' }; });
+  }
+
+  /* ---------- image handling ---------- */
+  function canvasToBlob(canvas, type, quality) {
+    return new Promise(function (resolve, reject) {
+      if (typeof canvas.toBlob === 'function') {
+        canvas.toBlob(function (b) { b ? resolve(b) : reject(new Error('The image could not be encoded.')); }, type, quality);
+        return;
+      }
+      try {
+        var dataUrl = canvas.toDataURL(type, quality);
+        var parts = dataUrl.split(',');
+        var bin = atob(parts[1]);
+        var buf = new Uint8Array(bin.length);
+        for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+        resolve(new Blob([buf], { type: type }));
+      } catch (e) {
+        reject(new Error('The image could not be encoded.'));
+      }
+    });
+  }
+
+  function loadImageElement(url) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { reject(new Error('The image could not be decoded.')); };
+      img.src = url;
+    });
+  }
+
+  /*
+   * Normalise every image to a canvas so we can:
+   *   - apply EXIF orientation (phones store photos rotated)
+   *   - support WebP, which pdf-lib cannot embed directly
+   *   - preserve PNG/WebP alpha by encoding those as PNG
+   * No white fill anywhere — transparency survives into the PDF.
+   */
+  function prepareImage(file) {
+    var mime = sniffImageMime(file.bytes, file.name);
+    if (!mime) return Promise.reject(new Error('not a JPG, PNG or WebP image'));
+
+    var blob = new Blob([file.bytes], { type: mime });
+    var source = null;
+    var objectUrl = null;
+
+    var acquire;
+    if (typeof createImageBitmap === 'function') {
+      acquire = createImageBitmap(blob, { imageOrientation: 'from-image' })
+        .then(function (bmp) { source = bmp; })
+        .catch(function () { source = null; });
+    } else {
+      acquire = Promise.resolve();
+    }
+
+    return acquire.then(function () {
+      if (source) return;
+      objectUrl = URL.createObjectURL(blob);
+      return loadImageElement(objectUrl).then(function (img) { source = img; });
+    }).then(function () {
+      var w = source.width || source.naturalWidth;
+      var h = source.height || source.naturalHeight;
+      if (!w || !h) throw new Error('no readable dimensions');
+      if (w * h > MAX_IMAGE_PIXELS) throw new Error('too large (' + w + '\u00d7' + h + ') for the browser to process');
+
+      var canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      var ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('your browser could not allocate a canvas large enough for this image');
+
+      ctx.drawImage(source, 0, 0, w, h);
+
+      // PNG and WebP can carry transparency — keep it. JPEG cannot, so stay JPEG.
+      var outMime = mime === 'image/jpeg' ? 'image/jpeg' : 'image/png';
+
+      return canvasToBlob(canvas, outMime, 0.92)
+        .then(function (out) { return out.arrayBuffer(); })
+        .then(function (buf) {
+          return {
+            bytes: new Uint8Array(buf),
+            mime: outMime,
+            width: canvas.width,
+            height: canvas.height
+          };
+        });
+    }).then(function (result) {
+      cleanup();
+      return result;
+    }, function (err) {
+      cleanup();
+      throw err;
+    });
+
+    function cleanup() {
+      if (source && typeof source.close === 'function') {
+        try { source.close(); } catch (e) { /* ignore */ }
+      }
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    }
+  }
+
+  function runImages() {
+    if (!state.files.length) return Promise.reject(new Error('Add at least one image.'));
+    var doc;
+    return PDFLib.PDFDocument.create().then(function (created) {
+      doc = created;
+      var chain = Promise.resolve();
+      state.files.forEach(function (file) {
+        chain = chain.then(function () {
+          return prepareImage(file).then(function (prep) {
+            var embed = prep.mime === 'image/png'
+              ? doc.embedPng(prep.bytes)
+              : doc.embedJpg(prep.bytes);
+
+            return embed.then(function (img) {
+              // Page = image. No margins, no centring, no white fill.
+              var w = prep.width * PT_PER_PX;
+              var h = prep.height * PT_PER_PX;
+              var page = doc.addPage([w, h]);
+              page.drawImage(img, { x: 0, y: 0, width: w, height: h });
+            });
+          }).catch(function (err) {
+            throw new Error('Could not use "' + file.name + '" — ' + (err && err.message ? err.message : 'unknown problem') + '.');
+          });
+        });
+      });
+      return chain;
+    }).then(function () { return doc.save(); })
+      .then(function (bytes) { return { bytes: bytes, name: baseName() + '-images.pdf' }; });
+  }
+
+  /* ---------- runner ---------- */
+  var RUNNERS = {
+    merge: runMerge, split: runSplit, rotate: runRotate,
+    reorder: runReorder, remove: runRemove, image: runImages
+  };
+
+  function runCurrentTool() {
+    if (state.busy || !state.toolId || !PDFLIB_OK) return;
+    var runner = RUNNERS[state.toolId];
+    if (!runner) return;
+
+    clearStatus();
+    setBusy(true);
+    var started = Date.now();
+
+    runner().then(function (result) {
+      var wait = Math.max(0, 220 - (Date.now() - started));
+      return new Promise(function (res) {
+        window.setTimeout(function () { res(result); }, wait);
+      });
+    }).then(function (result) {
+      if (!result || !result.bytes || !result.bytes.byteLength) {
+        throw new Error('The operation produced an empty file. Nothing was changed.');
+      }
+      showResult(result.bytes, result.name);
+    }).catch(function (err) {
+      console.error(err);
+      setStatus('error', (err && err.message) ? err.message : 'Something went wrong while processing your files.');
+    }).then(function () {
+      setBusy(false);
+      updateActions();
+    });
+  }
+
+  /* ---------- wiring ---------- */
+  function wireUp() {
+    var dropzone = $('#dropzone');
+    var fileInput = $('#fileInput');
+
+    dropzone.addEventListener('click', function () { fileInput.click(); });
+    dropzone.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        fileInput.click();
+      }
+    });
+
+    ['dragenter', 'dragover'].forEach(function (t) {
+      dropzone.addEventListener(t, function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (!state.busy) dropzone.classList.add('is-dragover');
+      });
+    });
+
+    dropzone.addEventListener('dragleave', function (e) {
+      if (!dropzone.contains(e.relatedTarget)) dropzone.classList.remove('is-dragover');
+    });
+
+    dropzone.addEventListener('drop', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dropzone.classList.remove('is-dragover');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+        addFiles(e.dataTransfer.files);
+      }
+    });
+
+    fileInput.addEventListener('change', function () {
+      if (fileInput.files && fileInput.files.length) addFiles(fileInput.files);
+      fileInput.value = '';
+    });
+
+    window.addEventListener('dragover', function (e) { e.preventDefault(); });
+    window.addEventListener('drop', function (e) { e.preventDefault(); });
+
+    $('#runBtn').addEventListener('click', runCurrentTool);
+
+    $('#resetBtn').addEventListener('click', function () {
+      state.files = [];
+      state.pageCount = 0;
+      state.order = [];
+      state.selected = new Set();
+      state.controls = { splitRange: '', rotateAngle: '90' };
+      clearResult();
+      clearStatus();
+      renderWorkspace();
+      $('#dropzone').focus();
+    });
+
+    window.addEventListener('beforeunload', function () {
+      if (state.resultUrl) URL.revokeObjectURL(state.resultUrl);
+    });
+  }
+
+  /* ---------- boot ---------- */
+  if (!PDFLIB_OK) {
+    $('#cdnWarning').hidden = false;
+    renderToolList();
     return;
   }
 
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-
-  items.forEach(function (el) { io.observe(el); });
+  wireUp();
+  render();
 })();
 </script>
 </body>
